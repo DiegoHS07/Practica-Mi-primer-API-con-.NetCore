@@ -49,7 +49,7 @@ namespace MiPrimeraApi.Controllers
         public IActionResult Registrar(Articulo articulo){
             
             articulos.Add(articulo);
-            
+
             return CreatedAtAction(nameof(ObtenerPorId), new{articulo.Id}, articulo);
         }
         
@@ -57,11 +57,20 @@ namespace MiPrimeraApi.Controllers
         [HttpPut]
         [Route("")]
         public IActionResult Editar(int id, Articulo articulo){
+            var articuloOriginal = articulos.FirstOrDefault(a => a.Id == id);
             articulo.Id = id;
-            var indice = articulos.IndexOf(articulo);
+            var indice = articulos.IndexOf(articuloOriginal);
             articulos[indice].Nombre = articulo.Nombre;
             articulos[indice].Descripcion = articulo.Descripcion;
             articulos[indice].Precio = articulo.Precio;
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Borrar(int id){
+            var articulo = articulos.FirstOrDefault(a => a.Id == id);
+            articulos.Remove(articulo);
             return Ok();
         }
     }
