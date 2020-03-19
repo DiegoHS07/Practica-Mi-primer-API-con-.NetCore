@@ -55,7 +55,7 @@ namespace MiPrimeraApi.Controllers
         
 
         [HttpPut]
-        [Route("")]
+        [Route("{id}")]
         public IActionResult Editar(int id, Articulo articulo){
             var articuloOriginal = articulos.FirstOrDefault(a => a.Id == id);
             articulo.Id = id;
