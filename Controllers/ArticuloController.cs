@@ -49,8 +49,20 @@ namespace MiPrimeraApi.Controllers
         public IActionResult Registrar(Articulo articulo){
             
             articulos.Add(articulo);
+            
             return CreatedAtAction(nameof(ObtenerPorId), new{articulo.Id}, articulo);
         }
         
+
+        [HttpPut]
+        [Route("")]
+        public IActionResult Editar(int id, Articulo articulo){
+            articulo.Id = id;
+            var indice = articulos.IndexOf(articulo);
+            articulos[indice].Nombre = articulo.Nombre;
+            articulos[indice].Descripcion = articulo.Descripcion;
+            articulos[indice].Precio = articulo.Precio;
+            return Ok();
+        }
     }
 }
