@@ -26,9 +26,31 @@ namespace MiPrimeraApi.Controllers
         // GET api/articulo
         [HttpGet]
         [Route("")]
+
         public IActionResult Obtener()
         {
             return Ok(articulos);
         }
+
+        [HttpGet]
+        [Route("{id}")]
+
+        public IActionResult ObtenerPorId(int id){
+            var articulo = articulos.FirstOrDefault(a => a.Id == id);
+            if(articulo == null){
+                return NotFound();
+            }
+            return Ok(articulo);
+        }
+
+        [HttpPost]
+        [Route("")]
+
+        public IActionResult Registrar(Articulo articulo){
+            
+            articulos.Add(articulo);
+            return CreatedAtAction(nameof(ObtenerPorId), new{articulo.Id}, articulo);
+        }
+        
     }
 }
